@@ -1,0 +1,54 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  max-width: 880px;
+  width: 100%;
+  max-height: 100%;
+  margin: 45px auto 40px;
+  color: #545454;
+  border-bottom: 1px solid #545454;
+  padding-bottom: 41px;
+}
+
+.header__logo {
+  width: 173px;
+  background-size: cover;
+}
+
+.header__logout {
+  color: white;
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 18px;
+  background-color: black;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  cursor: pointer;
+}
+
+.header__email {
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 18px;
+  color: white;
+  margin-left: 400px;
+}
+
+@media (min-width: 200px) and (max-width: 885px) {
+  .header {
+    max-width: 320px;
+    padding-bottom: 32px;
+  }
+  .header__logo {
+    width: 126px;
+    margin-left: 27px;
+  }
+  .header__logout {
+    font-size: 13px;
+  }
+  .header__email {
+    margin-left: 19px;
+    font-size: 14px;
+  }
+}
