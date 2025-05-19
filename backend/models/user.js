@@ -20,6 +20,7 @@ const newUserSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
+    unique: true,
     validate: {
       validator: (v) => validator.isEmail(v),
       message: 'email invalido',
@@ -28,6 +29,7 @@ const newUserSchema = new mongoose.Schema({
   password: {
     type: String,
     require: true,
+    select: false,
     min: 6,
     max: 30,
   },

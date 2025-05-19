@@ -1,19 +1,33 @@
-module.exports = (req, res, next) => {
-  const { authorization } = req.headers;
-  if (!authorization) {
-    return res.status(401).send('No authorization ');
+// Middleware para autenticar
+const jwt = require('jsonwebtoken');
+
+const SECRET_KEY = process.env.JWT_SECRET || 'secret'; // Usa variable de entorno si está disponible
+
+const authMiddleware = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+
+  // Verifica que el encabezado Authorization exista y comience con "Bearer "
+  if (!authHeader || !authHeader.toLowerCase().startsWith('bearer ')) {
+    return res
+      .status(403)
+      .json({ error: 'No autorizado: encabezado faltante o inválido' });
   }
-  const token = authorization.split('bearer ')[1];
+
+  const token = authHeader.split(' ')[1]; // Extrae el token después de "Bearer"
+
   if (!token) {
-    return res.status(401).send('No token');
+    return res
+      .status(403)
+      .json({ error: 'No autorizado: token no proporcionado' });
   }
+
   try {
-    console.log(token);
-    //const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret');
-    const decoded = jwt.verify(token, 'secret');
-    req.user = decoded;
+    const payload = jwt.verify(token, SECRET_KEY); // Verifica y decodifica el token
+    req.user = payload; // Añade el payload al objeto req
+    next(); // Continúa con el siguiente middleware o controlador
   } catch (err) {
-    return res.status(401).send('Error al validar token');
+    return res.status(401).json({ error: 'Token inválido o expirado' });
   }
-  next();
 };
+
+module.exports = authMiddleware;

@@ -15,51 +15,91 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.jsx';
 import { getUserInfo, signin, signup } from '../../utils/auth.js';
 import InfoTooltip from '../Popup/InfoTooltip/InfoTooltip.jsx';
 import cierre from '../../images/Close Icon.svg';
-import { use } from 'react';
+//import { use } from 'react';
 
 function App() {
   const navigate = useNavigate();
   const [popup, setPopup] = useState(null);
-  const [CurrentUser, setCurrentUser] = useState({});
+  const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
   const [token, setToken] = useState('');
   const [infoIsOpen, setInfoIsOpen] = useState(false);
   const [isInfoSuccess, setIsInfoSuccess] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
 
-  const fechUser = async () => {
+  /*
+  const fetchUser = async () => {
     const responseUser = await apiInstance.getUserInfo();
 
     return responseUser;
-  };
+  };*/
 
   const handleEditAvatar = (avatar) => {
     if (avatar == '') {
       alert('Por favor rellenar la URL');
     } else {
       apiInstance.editAvatarUser(avatar).then((response) => {
+        console.log(response);
         setCurrentUser(response);
         setPopup(null);
       });
     }
   };
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (isLogin) {
-      fechUser().then((data) => {
-        getUserInfo().then((response) => {
+      const token = localStorage.getItem('token');  //entonces para que la quiero guardar en el estado
+
+      if (!token) return;
+
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      };
+
+      Promise.all([fechUser(headers), getUserInfo(headers)])
+        .then(([data, response]) => {
           setCurrentUser({ ...data, email: response.email });
           navigate('/');
+        })
+        .catch((error) => {
+          console.error('Error al obtener los datos del usuario:', error);
+          setIsLogin(false);
+          localStorage.removeItem('token');
         });
-      });
     }
   }, [isLogin]);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      setIsLogin(true);
+      setIsLogin(true); // Marca al usuario como logueado
     }
+  }, []);*/
+
+  useEffect(() => {
+    async function fetchUser() {
+      if (isLogin) {
+        const response = await getUserInfo();
+        setCurrentUser(response);
+        //const createtoken = localStorage.getItem('token');
+        navigate('/');
+      }
+    }
+
+    fetchUser(); //CUAL ES SU OBJETIVO
+  }, [isLogin]);
+
+  //SON DOS VARAIBLES PARA LO MISMO,
+  //noh acia nada, caISTE EN UNA REFERENCIA CIRCULAR
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setToken(token);
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    } //QUE PASA SI NO HAY TOKEN
   }, []);
 
   const handleUpdateUser = (data) => {
@@ -158,7 +198,7 @@ function App() {
 
   return (
     <>
-      <CurrentUserContext.Provider value={CurrentUser}>
+      <CurrentUserContext.Provider value={currentUser}>
         <div>
           <div className='page'>
             <Header
@@ -215,7 +255,6 @@ function App() {
           </div>
         </div>
       </CurrentUserContext.Provider>
-      ;
     </>
   );
 }

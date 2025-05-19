@@ -8,7 +8,8 @@
     "lint": "npx eslint .",
     "lint:fix": "npx eslint --fix .",
     "dev": "nodemon app.js ",
-    "start": "nodemon app.js "
+    "start": "nodemon app.js ",
+    "debug": "node app.js --inspect"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,7 @@
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
     "eslint-config-airbnb-base": "^15.0.0",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",

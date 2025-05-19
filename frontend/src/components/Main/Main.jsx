@@ -85,6 +85,7 @@ const Main = (props) => {
           onClick={() => handleOpenPopup(newAvatarPopup)}
         >
           <img src={lapiz} alt='lapiz' className='profile__avatar-edit' />
+
           <img
             src={userContext.avatar}
             alt='Avatar'

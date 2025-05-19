@@ -18,6 +18,8 @@ router.post('/users', createUser);
 
 router.patch('/users/me', updateProfile);
 
+router.get('/users/me', getUserId);
+
 router.patch('/users/me/avatar', updateAvatar);
 
 module.exports = router;

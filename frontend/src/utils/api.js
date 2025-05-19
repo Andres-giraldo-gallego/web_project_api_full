@@ -1,7 +1,7 @@
-const baseURL = "https://around-api.es.tripleten-services.com/v1";
+const baseURL = 'http://localhost:3000';
 const headers = {
-  authorization: "387a3808-ad6d-45cd-b127-9db5833c8e93",
-  "Content-Type": "application/json",
+  'Authorization': `Bearer ${localStorage.getItem('token')}`,
+  'Content-Type': 'application/json',
 };
 class Api {
   constructor({ baseURL, headers }) {
@@ -11,7 +11,7 @@ class Api {
 
   getInitialCards() {
     return fetch(`${this.baseURL}/cards`, {
-      method: "GET",
+      method: 'GET',
       headers: this.headers,
     }).then((res) => {
       if (res.ok) {
@@ -22,7 +22,7 @@ class Api {
 
   getUserInfo() {
     return fetch(`${this.baseURL}/users/me`, {
-      method: "GET",
+      method: 'GET',
       headers: this.headers,
     }).then((res) => {
       if (res.ok) {
@@ -33,7 +33,7 @@ class Api {
 
   editUserInfo(body) {
     return fetch(`${this.baseURL}/users/me`, {
-      method: "PATCH",
+      method: 'PATCH',
       headers: this.headers,
       body: JSON.stringify(body),
     }).then((res) => {
@@ -45,7 +45,7 @@ class Api {
 
   editAvatarUser(avatar) {
     return fetch(`${this.baseURL}/users/me/avatar`, {
-      method: "PATCH",
+      method: 'PATCH',
       headers: this.headers,
       body: JSON.stringify({
         avatar: avatar,
@@ -59,7 +59,7 @@ class Api {
 
   createCard(body) {
     return fetch(`${this.baseURL}/cards/`, {
-      method: "POST",
+      method: 'POST',
       headers: this.headers,
       body: JSON.stringify(body),
     }).then((res) => {
@@ -70,7 +70,7 @@ class Api {
   }
   deleteCard(id) {
     return fetch(`${this.baseURL}/cards/${id}`, {
-      method: "DELETE",
+      method: 'DELETE',
       headers: this.headers,
     }).then((res) => {
       if (res.ok) {
@@ -80,7 +80,7 @@ class Api {
   }
   likeCard(_id) {
     return fetch(`${this.baseURL}/cards/${_id}/likes`, {
-      method: "PUT",
+      method: 'PUT',
       headers: this.headers,
     }).then((res) => {
       if (res.ok) {
@@ -90,7 +90,7 @@ class Api {
   }
   dislikeCard(_id) {
     return fetch(`${this.baseURL}/cards/${_id}/likes`, {
-      method: "DELETE",
+      method: 'DELETE',
       headers: this.headers,
     }).then((res) => {
       if (res.ok) {

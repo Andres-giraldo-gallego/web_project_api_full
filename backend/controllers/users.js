@@ -1,4 +1,7 @@
+//const user = require('../models/user.js');
 const UserModel = require('../models/user.js');
+const bcrypt = require('bcryptjs');
+//const jwt = require('jsonwebtoken');
 
 const getUsers = async (req, res) => {
   try {
@@ -10,8 +13,9 @@ const getUsers = async (req, res) => {
 };
 
 const getUserId = async (req, res) => {
+  console.log(req.user._id);
   try {
-    const faintUser = await UserModel.findById(req.params.userId).orFail();
+    const faintUser = await UserModel.findById(req.user._id).orFail();
     return res.json(faintUser);
   } catch (error) {
     if (error.name === 'DocumentNotFoundError') {
@@ -24,17 +28,35 @@ const getUserId = async (req, res) => {
 
 const createUser = async (req, res) => {
   try {
-    const { name, about, avatar } = req.body;
-    const newUser = new UserModel({ name, about, avatar });
+    const { name, about, avatar, email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).send('Email y contraseña son obligatorios.');
+    }
+
+    // Hashear la contraseña
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newUser = new UserModel({
+      name, // si es undefined, el valor por defecto del esquema se usará
+      about,
+      avatar,
+      email,
+      password: hashedPassword,
+    });
+
     const savedUser = await newUser.save();
-    return res.status(201).json(savedUser);
+
+    // No devolver la contraseña
+    const userToReturn = savedUser.toObject();
+    delete userToReturn.password;
+
+    return res.status(201).json(userToReturn);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res
       .status(400)
-      .send(
-        'Se pasaron datos inválidos a los métodos para crear un usuario/tarjeta o para actualizar el avatar/perfil de un usuario'
-      );
+      .send('Se pasaron datos inválidos al crear un usuario.');
   }
 };
 
@@ -63,6 +85,7 @@ const updateProfile = async (req, res) => {
 
 const updateAvatar = async (req, res) => {
   const { avatar } = req.body;
+  console.log('avatar', req.user._id);
   try {
     const updateUser = await UserModel.findByIdAndUpdate(
       req.user._id,

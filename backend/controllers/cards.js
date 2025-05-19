@@ -23,8 +23,16 @@ const createCard = async (req, res) => {
 
 const deleteCard = async (req, res) => {
   try {
-    const card = await CardModel.findByIdAndDelete(req.params.cardId).orFail();
-    return res.status(200).json({ message: 'Tarjeta eliminada' }, card); // Añadido return para mantener consistencia
+    const card = await CardModel.findById(req.params.cardId).orFail();
+    // verifica si el usuario es el dueño de la tarjeta
+
+    if (card.userId.toString() !== req.user._id) {
+      return res
+        .status(403)
+        .json({ message: 'No tienes permisos para eliminar esta tarjeta' });
+    }
+    await card.deleteOne(); // Elimina la tarjeta
+    return res.status(200).json({ message: 'Tarjeta eliminada' });
   } catch (error) {
     if (error.name === 'DocumentNotFoundError') {
       return res.status(404).json({ message: 'Tarjeta no encontrada' });
