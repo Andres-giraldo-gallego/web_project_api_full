@@ -31,7 +31,7 @@ export const signup = async (email, password) => {
     });
     const responseJson = await response.json();
 
-    return responseJson.data;
+    return responseJson;
   } catch (error) {
     console.error('=== error ===', error);
   }
