@@ -26,7 +26,7 @@ const deleteCard = async (req, res) => {
     const card = await CardModel.findById(req.params.cardId).orFail();
     // verifica si el usuario es el dueño de la tarjeta
 
-    if (card.userId.toString() !== req.user._id) {
+    if (card.owner.toString() !== req.user._id) {
       return res
         .status(403)
         .json({ message: 'No tienes permisos para eliminar esta tarjeta' });
@@ -45,6 +45,7 @@ const deleteCard = async (req, res) => {
 
 const likesCard = async (req, res) => {
   try {
+    console.log(req.params.cardId);
     const updatedLikesCard = await CardModel.findByIdAndUpdate(
       req.params.cardId,
       { $addToSet: { likes: req.user._id } },

@@ -27,13 +27,6 @@ function App() {
   const [isInfoSuccess, setIsInfoSuccess] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
 
-  /*
-  const fetchUser = async () => {
-    const responseUser = await apiInstance.getUserInfo();
-
-    return responseUser;
-  };*/
-
   const handleEditAvatar = (avatar) => {
     if (avatar == '') {
       alert('Por favor rellenar la URL');
@@ -82,16 +75,13 @@ function App() {
       if (isLogin) {
         const response = await getUserInfo();
         setCurrentUser(response);
-        //const createtoken = localStorage.getItem('token');
         navigate('/');
       }
     }
 
-    fetchUser(); //CUAL ES SU OBJETIVO
+    fetchUser();
   }, [isLogin]);
 
-  //SON DOS VARAIBLES PARA LO MISMO,
-  //noh acia nada, caISTE EN UNA REFERENCIA CIRCULAR
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -99,7 +89,7 @@ function App() {
       setIsLogin(true);
     } else {
       setIsLogin(false);
-    } //QUE PASA SI NO HAY TOKEN
+    }
   }, []);
 
   const handleUpdateUser = (data) => {

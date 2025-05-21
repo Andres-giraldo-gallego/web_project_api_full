@@ -1,8 +1,5 @@
 const baseURL = 'http://localhost:3000';
-const headers = {
-  'Authorization': `Bearer ${localStorage.getItem('token')}`,
-  'Content-Type': 'application/json',
-};
+
 class Api {
   constructor({ baseURL, headers }) {
     this.baseURL = baseURL;
@@ -12,7 +9,10 @@ class Api {
   getInitialCards() {
     return fetch(`${this.baseURL}/cards`, {
       method: 'GET',
-      headers: this.headers,
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json',
+      },
     }).then((res) => {
       if (res.ok) {
         return res.json();
@@ -23,7 +23,10 @@ class Api {
   getUserInfo() {
     return fetch(`${this.baseURL}/users/me`, {
       method: 'GET',
-      headers: this.headers,
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json',
+      },
     }).then((res) => {
       if (res.ok) {
         return res.json();
@@ -34,7 +37,10 @@ class Api {
   editUserInfo(body) {
     return fetch(`${this.baseURL}/users/me`, {
       method: 'PATCH',
-      headers: this.headers,
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(body),
     }).then((res) => {
       if (res.ok) {
@@ -46,7 +52,10 @@ class Api {
   editAvatarUser(avatar) {
     return fetch(`${this.baseURL}/users/me/avatar`, {
       method: 'PATCH',
-      headers: this.headers,
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({
         avatar: avatar,
       }),
@@ -60,7 +69,10 @@ class Api {
   createCard(body) {
     return fetch(`${this.baseURL}/cards/`, {
       method: 'POST',
-      headers: this.headers,
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(body),
     }).then((res) => {
       if (res.ok) {
@@ -71,7 +83,10 @@ class Api {
   deleteCard(id) {
     return fetch(`${this.baseURL}/cards/${id}`, {
       method: 'DELETE',
-      headers: this.headers,
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json',
+      },
     }).then((res) => {
       if (res.ok) {
         return res.json();
@@ -81,7 +96,10 @@ class Api {
   likeCard(_id) {
     return fetch(`${this.baseURL}/cards/${_id}/likes`, {
       method: 'PUT',
-      headers: this.headers,
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json',
+      },
     }).then((res) => {
       if (res.ok) {
         return res.json();
@@ -89,9 +107,13 @@ class Api {
     });
   }
   dislikeCard(_id) {
+    console.log(_id);
     return fetch(`${this.baseURL}/cards/${_id}/likes`, {
       method: 'DELETE',
-      headers: this.headers,
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json',
+      },
     }).then((res) => {
       if (res.ok) {
         return res.json();
@@ -100,6 +122,6 @@ class Api {
   }
 }
 
-const apiInstance = new Api({ baseURL, headers });
+const apiInstance = new Api({ baseURL });
 
 export default apiInstance;

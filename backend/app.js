@@ -42,3 +42,7 @@ app.get('*', (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
+
+app.use((req, res) => {
+  res.status(500).send({ message: 'Se ha producido un error en el servidor' });
+});

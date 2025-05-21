@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 
 const Header = ({ handleLogout, handleRegister }) => {
   const currentUser = useContext(CurrentUserContext);
-  console.log(currentUser);
+
   const location = useLocation();
   return (
     <header className='header'>

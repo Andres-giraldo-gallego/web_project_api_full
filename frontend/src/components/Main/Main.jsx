@@ -54,18 +54,25 @@ const Main = (props) => {
 
   const handleIslikedCard = (Cardid, isLiked) => {
     if (isLiked) {
+      console.log(Cardid);
+
       apiInstance.dislikeCard(Cardid).then((response) => {
         setCards((state) => {
           return state.map((item) =>
-            item._id === response._id ? response : item
+            item._id === response.updatedLikesCard._id
+              ? response.updatedLikesCard
+              : item
           );
         });
       });
     } else {
       apiInstance.likeCard(Cardid).then((response) => {
+        console.log(response);
         setCards((state) => {
           return state.map((item) =>
-            item._id === response._id ? response : item
+            item._id === response.updatedLikesCard._id
+              ? response.updatedLikesCard
+              : item
           );
         });
       });
@@ -124,7 +131,7 @@ const Main = (props) => {
       </section>
       <section className='elements'>
         <div className='elements__container'>
-          {cards.map((card) => (
+          {cards?.map((card) => (
             <Card
               key={card._id}
               card={card}

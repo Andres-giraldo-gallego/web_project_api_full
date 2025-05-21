@@ -1,9 +1,12 @@
-import botebasura from '../../images/Trash.png';
 import megusta from '../../images/Group.png';
+import ElementTrash from './ElementTrash.jsx';
+import { useContext } from 'react';
+import CurrentUserContext from '../../contexts/CurrentUserContext.js';
 
 const Card = (props) => {
-  const { link, name, isLiked, _id } = props.card || {};
-
+  const userContext = useContext(CurrentUserContext);
+  const { link, name, _id, likes, owner } = props.card || {};
+  const isLiked = likes && likes.length > 0;
   const { handleOpenImage, imagesPopup, DeleteCard } = props;
 
   const cardLikeButtonClassName = `elements_link ${
@@ -23,14 +26,15 @@ const Card = (props) => {
           onClick={handleCLick}
         />
       </div>
-      <button className='elements__trash' aria-label='Borrar'>
-        <img
-          src={botebasura}
-          alt='bote de basura'
-          className='elements__trash-img'
-          onClick={() => handleOpenImage(DeleteCard(_id))}
+
+      {owner._id == userContext._id && (
+        <ElementTrash
+          handleOpenImage={handleOpenImage}
+          DeleteCard={DeleteCard}
+          selectCard={handleCLick}
+          _id={_id}
         />
-      </button>
+      )}
 
       <div className='elements_info'>
         <p className='elements_text'>{name}</p>
