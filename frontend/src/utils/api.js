@@ -1,4 +1,4 @@
-const baseURL = 'https://api.apifull.chickenkiller.com/';
+const baseURL = 'https://api.apifull.chickenkiller.com';
 
 class Api {
   constructor({ baseURL, headers }) {
