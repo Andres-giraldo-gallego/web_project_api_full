@@ -1,7 +1,7 @@
 const UserModel = require('../models/user.js');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
+require('dotenv').config();
 const { JWT_SECRET = 'secret' } = process.env;
 
 module.exports.Login = async (req, res) => {

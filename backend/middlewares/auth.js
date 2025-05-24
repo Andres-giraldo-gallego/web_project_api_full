@@ -1,4 +1,5 @@
 // Middleware para autenticar
+require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
 const SECRET_KEY = process.env.JWT_SECRET || 'secret'; // Usa variable de entorno si está disponible

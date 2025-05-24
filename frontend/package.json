@@ -7,7 +7,8 @@
     "dev": "vite --open",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "npm run build && scp -r ./dist/* g8859giraldo@apifull.chickenkiller.com:/home/g8859giraldo/web_project_api_full/frontend"
   },
   "dependencies": {
     "normalize.css": "^8.0.1",

@@ -45,7 +45,6 @@ const deleteCard = async (req, res) => {
 
 const likesCard = async (req, res) => {
   try {
-    console.log(req.params.cardId);
     const updatedLikesCard = await CardModel.findByIdAndUpdate(
       req.params.cardId,
       { $addToSet: { likes: req.user._id } },

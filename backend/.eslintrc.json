@@ -17,6 +17,8 @@
     // Configuración para saltos de línea
     "linebreak-style": ["error", "unix"],
 
-    "require-jsdoc": "off"
+    "require-jsdoc": "off",
+
+    "no-unused-vars": ["error", { "argsIgnorePattern": "next" }]
   }
 }
