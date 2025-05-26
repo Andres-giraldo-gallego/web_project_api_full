@@ -16,6 +16,8 @@ const Card = (props) => {
     handleOpenImage(imagesPopup({ link, name }));
   };
 
+  const ownerId = owner._id || owner;
+
   return (
     <div className='elements_card'>
       <div className='elements_img-container'>
@@ -27,7 +29,7 @@ const Card = (props) => {
         />
       </div>
 
-      {owner._id == userContext._id && (
+      {ownerId._id == userContext._id && (
         <ElementTrash
           handleOpenImage={handleOpenImage}
           DeleteCard={DeleteCard}
