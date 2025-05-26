@@ -15,7 +15,6 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.jsx';
 import { getUserInfo, signin, signup } from '../../utils/auth.js';
 import InfoTooltip from '../Popup/InfoTooltip/InfoTooltip.jsx';
 import cierre from '../../images/Close Icon.svg';
-//import { use } from 'react';
 
 function App() {
   const navigate = useNavigate();
@@ -38,37 +37,6 @@ function App() {
       });
     }
   };
-
-  /*useEffect(() => {
-    if (isLogin) {
-      const token = localStorage.getItem('token');  //entonces para que la quiero guardar en el estado
-
-      if (!token) return;
-
-      const headers = {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      };
-
-      Promise.all([fechUser(headers), getUserInfo(headers)])
-        .then(([data, response]) => {
-          setCurrentUser({ ...data, email: response.email });
-          navigate('/');
-        })
-        .catch((error) => {
-          console.error('Error al obtener los datos del usuario:', error);
-          setIsLogin(false);
-          localStorage.removeItem('token');
-        });
-    }
-  }, [isLogin]);
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      setIsLogin(true); // Marca al usuario como logueado
-    }
-  }, []);*/
 
   useEffect(() => {
     async function fetchUser() {
