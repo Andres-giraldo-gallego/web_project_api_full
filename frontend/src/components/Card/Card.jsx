@@ -29,7 +29,7 @@ const Card = (props) => {
         />
       </div>
 
-      {ownerId._id == userContext._id && (
+      {ownerId == userContext._id && (
         <ElementTrash
           handleOpenImage={handleOpenImage}
           DeleteCard={DeleteCard}

@@ -9,20 +9,26 @@ module.exports.Login = async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(400).send('Email y contraseña son obligatorios.');
+      return res
+        .status(400)
+        .json({ message: 'Email y contraseña son obligatorios.' });
     }
 
     // Buscar usuario incluyendo el password (porque lo excluimos por defecto en el modelo)
     const user = await UserModel.findOne({ email }).select('+password');
 
     if (!user) {
-      return res.status(401).send('Correo o contraseña incorrectos.');
+      return res
+        .status(401)
+        .json({ message: 'Correo o contraseña incorrectos.' });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
-      return res.status(401).send('Correo o contraseña incorrectos.');
+      return res
+        .status(401)
+        .json({ message: 'Correo o contraseña incorrectos.' });
     }
 
     // Crear token con duración de 7 días
@@ -31,6 +37,8 @@ module.exports.Login = async (req, res) => {
     return res.status(200).json({ token });
   } catch (error) {
     console.error(error);
-    return res.status(500).send('Error en el servidor al iniciar sesión.');
+    return res
+      .status(500)
+      .json({ message: 'Error en el servidor al iniciar sesión.' });
   }
 };

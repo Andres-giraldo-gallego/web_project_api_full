@@ -2,14 +2,15 @@ export const signin = async (email, password) => {
   try {
     const response = await fetch(
       ' https://api.apifull.chickenkiller.com/signin',
+
       {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          email: email,
-          password: password,
+          email,
+          password,
         }),
       }
     );
@@ -24,6 +25,7 @@ export const signup = async (email, password) => {
   try {
     const response = await fetch(
       'https://api.apifull.chickenkiller.com/signup',
+
       {
         method: 'POST',
         headers: {
@@ -47,6 +49,7 @@ export const getUserInfo = async () => {
   try {
     const response = await fetch(
       'https://api.apifull.chickenkiller.com/users/me',
+
       {
         method: 'GET',
         headers: {
